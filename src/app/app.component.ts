@@ -11,6 +11,7 @@ import {AuthPage} from "../pages/auth/auth";
 import {CompleteRegistrationPage} from "../pages/complete-registration/complete-registration";
 import {DbProvider} from "../providers/db/db";
 import {Subscription} from "rxjs/Subscription";
+import {MyPetsPage} from "../pages/my-pets/my-pets";
 
 @Component({
   templateUrl: 'app.html'
@@ -36,7 +37,9 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Inicio', component: HomePage }
+      { title: 'Inicio', component: HomePage },
+      { title: 'List', component: ListPage },
+      { title: 'Mis Mascotas', component: MyPetsPage}
     ];
 
   }

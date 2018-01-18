@@ -1,0 +1,35 @@
+<!--
+  Generated template for the MyPetsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Mis Mascotas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+
+<ion-content padding>
+  <ul *ngIf="pets.lenght | async; else noPets">
+
+    <li *ngFor="let pet of pets | async">
+      {{ pet | json }}
+    </li>
+
+  </ul>
+
+  <ng-template #noPets>No has registrado tu máscota <a (click)="newPet()">Registrala ahora</a></ng-template>
+
+
+<ion-fab right bottom>
+  <button ion-fab><ion-icon name="add"></ion-icon></button>
+</ion-fab>
+</ion-content>

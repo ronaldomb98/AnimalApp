@@ -19,6 +19,8 @@ import {LoginComponent} from "../components/login/login";
 import {AuthPage} from "../pages/auth/auth";
 import {CompleteRegistrationPage} from "../pages/complete-registration/complete-registration";
 import { DbProvider } from '../providers/db/db';
+import {MyPetsPage} from "../pages/my-pets/my-pets";
+import {PetPage} from "../pages/pet/pet";
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { DbProvider } from '../providers/db/db';
     ListPage,
     AuthPage,
     CompleteRegistrationPage,
+    MyPetsPage,
+    PetPage,
     SignupComponent,
     LoginComponent
   ],
@@ -46,7 +50,9 @@ import { DbProvider } from '../providers/db/db';
     HomePage,
     ListPage,
     AuthPage,
-    CompleteRegistrationPage
+    CompleteRegistrationPage,
+    MyPetsPage,
+    PetPage
   ],
   providers: [
     StatusBar,
