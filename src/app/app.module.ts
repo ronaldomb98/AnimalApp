@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {IonicApp, IonicErrorHandler, IonicModule, LoadingController} from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -21,6 +21,7 @@ import {CompleteRegistrationPage} from "../pages/complete-registration/complete-
 import { DbProvider } from '../providers/db/db';
 import {MyPetsPage} from "../pages/my-pets/my-pets";
 import {PetPage} from "../pages/pet/pet";
+import {Camera} from "@ionic-native/camera";
 
 
 @NgModule({
@@ -59,7 +60,9 @@ import {PetPage} from "../pages/pet/pet";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    DbProvider
+    DbProvider,
+    Camera,
+    LoadingController
   ]
 })
 export class AppModule {}

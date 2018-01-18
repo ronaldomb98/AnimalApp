@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import {AngularFireDatabase} from "angularfire2/database";
 import {Observable} from "rxjs/Observable";
 import {PetPage} from "../pet/pet";
+import {AuthProvider} from "../../providers/auth/auth";
 
 /**
  * Generated class for the MyPetsPage page.
@@ -22,9 +23,13 @@ export class MyPetsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private angularFireDatabase: AngularFireDatabase
+    private angularFireDatabase: AngularFireDatabase,
+    private authProvider: AuthProvider
   ) {
-    this.pets = angularFireDatabase.list('pets').valueChanges()
+    this.pets = angularFireDatabase
+      .list('pets', ref => ref.orderByChild('userId').equalTo(this.authProvider.currentUserUid))
+      .valueChanges()
+
   }
 
   newPet(){

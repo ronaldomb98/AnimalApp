@@ -7,42 +7,77 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Pet</ion-title>
+    <ion-title>Registro de Mascota</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-card>
-    <ion-card-header text-center>
-      Inicio de sesión
-    </ion-card-header>
 
-    <ion-card-content>
-      <form [formGroup]="form">
-        <ion-item>
-          <ion-label floating>Correo Electronico</ion-label>
-          <ion-input formControlName="name" type="name"></ion-input>
-        </ion-item>
-        <ion-item class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
-          <p *ngIf="name.errors.required">
-            Campo obligatorio
-          </p>
-          <p *ngIf="name.errors.email">
-            El campo debe ser un correo. Ej: usuario@email.com
-          </p>
-        </ion-item>
+  <form [formGroup]="form">
+    <ion-list>
+      <!-- Name -->
+      <ion-item>
+        <ion-label>Nombre</ion-label>
+        <ion-input formControlName="name" type="name"></ion-input>
+      </ion-item>
+      <ion-item class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
+        <p *ngIf="name.errors.required">Campo obligatorio</p>
+      </ion-item>
 
-        <ion-item>
-          <ion-label floating>Adjuntar Archivo</ion-label>
-          <ion-input type="file"></ion-input>
-        </ion-item>
 
-        <div padding>
-          <button (click)="onDevelopment()" [disabled]="!form.valid" ion-button block>Iniciar Sesión!</button>
-        </div>
-      </form>
-    </ion-card-content>
-  </ion-card>
+      <!-- Description-->
+      <ion-item>
+        <ion-label stacked>Descripción de mascota</ion-label>
+        <ion-textarea placeholder="Estatura, color, personalidad..." formControlName="description" type="textarea" rows="3"></ion-textarea>
+      </ion-item>
+      <ion-item class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+        <p *ngIf="description.errors.required">Campo obligatorio</p>
+      </ion-item>
+
+      <!--Pet type-->
+      <ion-item>
+        <ion-label>Tipo de mascota</ion-label>
+        <ion-select formControlName="petType">
+          <ion-option selected value="dog">Perro</ion-option>
+          <ion-option value="cat">Gato</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Is Sterilized-->
+      <ion-item>
+        <ion-label>¿Esta Esterilizado?</ion-label>
+        <ion-checkbox formControlName="isSterilized" color="dark" checked="true"></ion-checkbox>
+      </ion-item>
+
+      <!-- Characteristics -->
+      <ion-item *ngIf="isSterilized.value == true">
+        <ion-label stacked>Descripción de mascota</ion-label>
+        <ion-textarea placeholder="Tatuaje" formControlName="characteristics" type="textarea" rows="3"></ion-textarea>
+      </ion-item>
+      <ion-item class="error" *ngIf="characteristics.invalid && (characteristics.dirty || characteristics.touched)">
+        <p *ngIf="characteristics.errors.required">Campo obligatorio</p>
+      </ion-item>
+
+
+
+      <!-- Photo -->
+      <ion-item>
+        <button ion-button (click)="capture()" round icon-right item-right color="secondary">
+          Tomale una foto!
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+
+    <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>
+
+    <!--submit button-->
+    <div padding>
+      <button (click)="upload()" [disabled]="!form.valid || !captureDataUrl" ion-button block>Guardar Datos!</button>
+    </div>
+  </form>
 </ion-content>
+
+

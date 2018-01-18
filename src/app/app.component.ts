@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import {App, MenuController, Nav, NavController, Platform} from 'ionic-angular';
+import {App, LoadingController, MenuController, Nav, NavController, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -19,7 +19,7 @@ import {MyPetsPage} from "../pages/my-pets/my-pets";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = AuthPage;
   userDataSub: Subscription = new Subscription();
   pages: Array<{title: string, component: any}>;
 
@@ -31,7 +31,8 @@ export class MyApp {
     public authProvider: AuthProvider,
     public app: App,
     public menuController: MenuController,
-    public dbProvider: DbProvider
+    public dbProvider: DbProvider,
+    public loadingCtrl: LoadingController
   ) {
     this.initializeApp();
 
@@ -61,10 +62,14 @@ export class MyApp {
   }
 
   public signOut() {
-    this.authProvider.signOut();
     this.nav.setRoot(HomePage).then(()=>{
-      this.nav.popToRoot();
+      this.nav.popToRoot().then(()=>{
+        this.authProvider.signOut();
+      });
+
     });
+
+
   }
 
   public checkLog() {
