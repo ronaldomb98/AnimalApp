@@ -46,4 +46,8 @@ export class DbProvider implements OnInit{
       )
   }
 
+  listDocumentType() {
+    return this.db.list('document-type').valueChanges()
+  }
+
 }

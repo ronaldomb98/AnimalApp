@@ -13,6 +13,7 @@ import {DbProvider} from "../providers/db/db";
 import {Subscription} from "rxjs/Subscription";
 import {MyPetsPage} from "../pages/my-pets/my-pets";
 import {ReportPage} from "../pages/report/report";
+import {PetPage} from "../pages/pet/pet";
 
 @Component({
   templateUrl: 'app.html'
@@ -93,7 +94,7 @@ export class MyApp {
 
           console.log(this.dbProvider.userDataRef)
           if (res){
-            this.nav.setRoot(HomePage).then(()=>{
+            this.nav.setRoot(ReportPage).then(()=>{ // HomePage
               this.nav.popToRoot()
               loading.dismiss()
             })

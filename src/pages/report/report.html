@@ -18,4 +18,51 @@
 
 <ion-content padding>
 
+  <form [formGroup]="form">
+    <ion-list>
+      <!-- Label -->
+      <ion-item>
+        <ion-label floating>Asunto</ion-label>
+        <ion-input formControlName="issue" type="name"></ion-input>
+      </ion-item>
+      <ion-item class="error" *ngIf="issue.invalid && (issue.dirty || issue.touched)">
+        <p *ngIf="issue.errors.required">Campo obligatorio</p>
+      </ion-item>
+
+
+      <!-- Description-->
+      <ion-item>
+        <ion-label floating>Descripción del reporte</ion-label>
+        <ion-textarea formControlName="description" type="textarea" rows="3"></ion-textarea>
+      </ion-item>
+      <ion-item class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+        <p *ngIf="description.errors.required">Campo obligatorio</p>
+      </ion-item>
+
+      <!-- Document type-->
+      <ion-item>
+        <ion-label>Tipo de Reporte</ion-label>
+        <ion-select formControlName="documentType">
+          <ion-option *ngFor="let documentType of documentTypeList | async" [value]="documentType.name">{{documentType.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <!-- Photo -->
+      <ion-item>
+        <button ion-button (click)="capture()" round icon-right item-right color="secondary">
+          Captura una foto!
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+
+    <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>
+
+    <!--submit button-->
+    <div padding>
+      <button (click)="upload()" [disabled]="!form.valid || !captureDataUrl" ion-button block>Guardar Datos!</button>
+    </div>
+  </form>
+  {{ form.value | json}}
 </ion-content>
