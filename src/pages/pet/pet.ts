@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {LoadingController, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import * as firebase from 'firebase';
 import {DbProvider} from "../../providers/db/db";
+import {LoadingProvider} from "../../providers/loading/loading";
 /**
  * Generated class for the PetPage page.
  *
@@ -26,7 +27,8 @@ export class PetPage {
     public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder,
     private camera: Camera,
-    private dbProvider: DbProvider
+    private dbProvider: DbProvider,
+    private loadingProvider: LoadingProvider
   ) {
 
   }
@@ -70,6 +72,9 @@ export class PetPage {
   }
 
   upload() {
+    // Create loading
+    let loading = this.loadingProvider.createLoading();
+    loading.present();
     let storageRef = firebase.storage().ref();
     // Create a timestamp as filename
     const filename = Math.floor(Date.now() / 1000);
@@ -88,7 +93,7 @@ export class PetPage {
         this.isSterilized.value,
         this.characteristics.value
       ).then(()=>{
-        this.navCtrl.pop();
+        this.navCtrl.pop().then(()=> loading.dismiss());
       })
     });
 

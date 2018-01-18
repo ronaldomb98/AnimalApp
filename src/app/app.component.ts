@@ -12,6 +12,7 @@ import {CompleteRegistrationPage} from "../pages/complete-registration/complete-
 import {DbProvider} from "../providers/db/db";
 import {Subscription} from "rxjs/Subscription";
 import {MyPetsPage} from "../pages/my-pets/my-pets";
+import {ReportPage} from "../pages/report/report";
 
 @Component({
   templateUrl: 'app.html'
@@ -39,7 +40,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Inicio', component: HomePage },
-      { title: 'List', component: ListPage },
+      { title: 'Reportes', component: ReportPage },
       { title: 'Mis Mascotas', component: MyPetsPage}
     ];
 
@@ -74,6 +75,8 @@ export class MyApp {
 
   public checkLog() {
     this.angularFireAuth.authState.subscribe(res=>{
+      let loading = this.loadingCtrl.create({content: 'Cargando Credenciales...', spinner: 'dots'})
+      loading.present()
       this.authProvider.currentUserUid = res ? res.uid : '';
       const _flag: boolean = res ? true : false;
       this.authProvider.isLoggedIn = _flag;
@@ -82,18 +85,22 @@ export class MyApp {
         this.nav.setRoot(AuthPage).then(()=>{
           this.userDataSub.unsubscribe();
           this.nav.popToRoot()
+          loading.dismiss()
         })
       }else {
         this.dbProvider.userDataRef = this.dbProvider.db.object('users-data/' +  this.authProvider.currentUserUid)
         this.userDataSub = this.dbProvider.userDataRef.valueChanges().subscribe(res=>{
+
           console.log(this.dbProvider.userDataRef)
           if (res){
             this.nav.setRoot(HomePage).then(()=>{
               this.nav.popToRoot()
+              loading.dismiss()
             })
           } else {
             this.nav.setRoot(CompleteRegistrationPage).then(()=>{
               this.nav.popToRoot()
+              loading.dismiss()
             })
           }
         })

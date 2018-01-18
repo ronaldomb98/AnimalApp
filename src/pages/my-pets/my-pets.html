@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -25,6 +25,8 @@
           <img [src]="pet.urlImg">
         </ion-thumbnail>
         <h2>{{ pet.name }}</h2>
+        <p>{{ pet.description }}</p>
+        <button ion-button clear item-end (click)="vewPet()">Ver</button>
       </ion-item>
     </ion-list>
     <div *ngIf="_pets.length === 0">No has registrado tus mascotas.<a (click)="newPet()">Registralas ahora</a></div>

@@ -22,6 +22,8 @@ import { DbProvider } from '../providers/db/db';
 import {MyPetsPage} from "../pages/my-pets/my-pets";
 import {PetPage} from "../pages/pet/pet";
 import {Camera} from "@ionic-native/camera";
+import {ReportPage} from "../pages/report/report";
+import { LoadingProvider } from '../providers/loading/loading';
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import {Camera} from "@ionic-native/camera";
     CompleteRegistrationPage,
     MyPetsPage,
     PetPage,
+    ReportPage,
     SignupComponent,
     LoginComponent
   ],
@@ -53,7 +56,8 @@ import {Camera} from "@ionic-native/camera";
     AuthPage,
     CompleteRegistrationPage,
     MyPetsPage,
-    PetPage
+    PetPage,
+    ReportPage
   ],
   providers: [
     StatusBar,
@@ -62,7 +66,8 @@ import {Camera} from "@ionic-native/camera";
     AuthProvider,
     DbProvider,
     Camera,
-    LoadingController
+    LoadingController,
+    LoadingProvider
   ]
 })
 export class AppModule {}

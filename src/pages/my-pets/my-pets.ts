@@ -35,5 +35,8 @@ export class MyPetsPage {
   newPet(){
     this.navCtrl.push(PetPage)
   }
+  vewPet(){
+    alert("En Desarrollo")
+  }
 
 }
