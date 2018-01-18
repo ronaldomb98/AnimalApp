@@ -14,3 +14,30 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+@keyframes error-appear {
+  0%   {color: #f3b0b3;; left:0px; top:0px;}
+  25%  {color: #f35f66; left:200px; top:0px;}
+  50%  {color: #f33037; left:200px; top:200px;}
+  75%  {color: #f32222; left:0px; top:200px;}
+  100% {color: #f30004; left:0px; top:0px;}
+}
+
+.error.item.item-block.item-md {
+  p{
+    color: red;
+    animation-name: error-appear;
+    animation-duration: .7s;
+  }
+  .item-inner{
+    border-bottom: none;
+  }
+}
+
+.text-red{
+  color: red;
+}
+.not-show {
+  visibility: hidden;
+}

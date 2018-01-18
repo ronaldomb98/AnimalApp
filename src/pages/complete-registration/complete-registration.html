@@ -1,0 +1,84 @@
+<!--
+  Generated template for the CompleteRegistrationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>CompleteRegistration</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header text-center>
+      Completar Registro
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="form">
+        <!-- name -->
+        <ion-item>
+          <ion-label floating>Nombres</ion-label>
+          <ion-input formControlName="name" type="name"></ion-input>
+        </ion-item>
+        <ion-item class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
+          <p *ngIf="name.errors.required">Campo obligatorio</p>
+        </ion-item>
+
+        <!-- surname -->
+        <ion-item>
+          <ion-label floating>Apellidos</ion-label>
+          <ion-input formControlName="surname" type="name"></ion-input>
+        </ion-item>
+        <ion-item class="error" *ngIf="surname.invalid && (surname.dirty || surname.touched)">
+          <p *ngIf="surname.errors.required">Campo obligatorio</p>
+        </ion-item>
+
+        <!-- address -->
+        <ion-item>
+          <ion-label floating>Dirección</ion-label>
+          <ion-input formControlName="address" type="name"></ion-input>
+        </ion-item>
+        <ion-item class="error" *ngIf="address.invalid && (address.dirty || address.touched)">
+          <p *ngIf="address.errors.required">Campo obligatorio</p>
+        </ion-item>
+
+        <!-- city -->
+        <ion-item>
+          <ion-label floating>Ciudad</ion-label>
+          <ion-input formControlName="city" type="name"></ion-input>
+        </ion-item>
+        <ion-item class="error" *ngIf="city.invalid && (city.dirty || city.touched)">
+          <p *ngIf="city.errors.required">Campo obligatorio</p>
+        </ion-item>
+
+        <!-- phone -->
+        <ion-item>
+          <ion-label floating>Telefono</ion-label>
+          <ion-input formControlName="phone" type="name"></ion-input>
+        </ion-item>
+        <ion-item class="error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+          <p *ngIf="phone.errors.required">Campo obligatorio</p>
+        </ion-item>
+
+        <!-- mobilePhone -->
+        <ion-item>
+          <ion-label floating>Telefono Celular</ion-label>
+          <ion-input formControlName="mobilePhone" type="name"></ion-input>
+        </ion-item>
+        <ion-item class="error" *ngIf="mobilePhone.invalid && (mobilePhone.dirty || mobilePhone.touched)">
+          <p *ngIf="mobilePhone.errors.required">Campo obligatorio</p>
+        </ion-item>
+
+        <div padding>
+          <button (click)="onSubmit()" [disabled]="!form.valid" ion-button block>Terminar Registro!</button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
