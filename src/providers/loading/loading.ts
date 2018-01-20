@@ -22,10 +22,10 @@ export class LoadingProvider {
     return this.loadingController.create({content:'Cargando...', spinner: 'dots'})
   }
 
-  createUpdatedToast(){
+  createUpdatedToast(time=3000, message='Se ha Actualizado la información'){
     return this.toastCtrl.create({
-      message: 'Información actualizada.',
-      duration: 3000,
+      message: message,
+      duration: time,
       position: 'middle'
     });
   }

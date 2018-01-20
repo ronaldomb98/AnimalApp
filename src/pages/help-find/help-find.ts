@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {DbProvider} from "../../providers/db/db";
 import {AngularFireList, SnapshotAction} from "angularfire2/database";
 import {Observable} from "rxjs/Observable";
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { MyAccountPage } from '../my-account/my-account';
+import {Subscription} from "rxjs/Subscription";
 
 /**
  * Generated class for the HelpFindPage page.
@@ -17,7 +18,7 @@ import { MyAccountPage } from '../my-account/my-account';
   selector: 'page-help-find',
   templateUrl: 'help-find.html',
 })
-export class HelpFindPage implements OnInit{
+export class HelpFindPage implements OnInit, OnDestroy{
 
   private documentType;
   private metadata;
@@ -25,6 +26,7 @@ export class HelpFindPage implements OnInit{
   private relatedDocuments;
   private documentsToAnalize;
   public topic: string;
+  private sub: Subscription;
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     private dbProvider: DbProvider,
@@ -47,11 +49,15 @@ export class HelpFindPage implements OnInit{
     this.filterBySimilitudes();
   }
 
+  ngOnDestroy(){
+    this.sub.unsubscribe();
+  }
+
   private filterBySimilitudes(){
     console.log("Iniciando filtro")
     let anotations = [];
     let petAnotations = [];
-    this.documents.subscribe((_documents:any)=>{
+    this.sub = this.documents.subscribe((_documents:any)=>{
       this.documentsToAnalize = _documents;
       this.relatedDocuments = [];
       console.log("documentos a analizar");
@@ -103,7 +109,6 @@ export class HelpFindPage implements OnInit{
   }
 
   presentProfileModal(key) {
-    alert(key)
     let profileModal = this.modalCtrl.create(MyAccountPage, { key: key });
     profileModal.present();
   }

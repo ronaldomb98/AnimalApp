@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Camera, CameraOptions} from "@ionic-native/camera";
@@ -20,11 +20,12 @@ import { ApiProvider } from '../../providers/api/api';
   selector: 'page-pet',
   templateUrl: 'pet.html',
 })
-export class PetPage {
+export class PetPage implements OnDestroy{
   public urlToDownload;
   public key;
   private sub: Subscription;
   private subApi: Subscription;
+  private subApiTranslate:Subscription;
   private oldImage;
   captureDataUrl: string;
   form: FormGroup;
@@ -49,15 +50,20 @@ export class PetPage {
     this.key = this.navParams.get('key');
     this.buildForm();
     this.subApi = new Subscription();
+    this.subApiTranslate = new Subscription();
     this.captureDataUrl = null;
-
   }
 
-  ionViewWillLeave() {
+  ngOnDestroy() {
     if (this.key) {
       this.sub.unsubscribe();
     }
     this.subApi.unsubscribe();
+    this.subApiTranslate.unsubscribe();
+  }
+
+  ionViewWillLeave() {
+
   }
 
   ionViewDidLoad() {
@@ -155,7 +161,7 @@ export class PetPage {
     });
     text = text.slice(0, -2);
     text+='.';
-    this.apiProvider.translateFromEnglishToSpanish(text)
+    this.subApiTranslate = this.apiProvider.translateFromEnglishToSpanish(text)
     .subscribe((res: any)=>{
       this.isAnalizing = false;
       let translations = res.data.translations;
@@ -163,8 +169,8 @@ export class PetPage {
       translations.forEach(element => {
         this.imageAnalisisTransalted+=element.translatedText;
       });
-      
-      
+
+
       this.imageAnalisisTransalted = this.imageAnalisisTransalted.replace('.',",");
       this.imageAnalisisTransalted = this.imageAnalisisTransalted.replace('"',"");
       this.imageAnalisisTransalted = this.imageAnalisisTransalted.replace(' ',"");
@@ -211,8 +217,8 @@ export class PetPage {
       ).then(()=>{
         this.navCtrl.pop().then(()=> loading.dismiss());
       })
-      
-      
+
+
     });
   }
 

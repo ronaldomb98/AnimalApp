@@ -27,7 +27,11 @@ export class AuthProvider {
   }
 
   public basicSignup(email: string, password: string){
-    return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
+    return this.angularFireAuth.auth.
+    createUserWithEmailAndPassword(email, password)
+    .then(()=>{
+      this.sendEmailVerification();
+    })
   }
 
   public facebookLogin(){
@@ -36,5 +40,13 @@ export class AuthProvider {
 
   public signOut() {
     return this.angularFireAuth.auth.signOut()
+  }
+
+  public sendEmailVerification(){
+    return this.angularFireAuth.auth.currentUser.sendEmailVerification()
+  }
+
+  public resetPassword(email){
+    return this.angularFireAuth.auth.sendPasswordResetEmail(email)
   }
 }

@@ -1,3 +1,15 @@
 page-home {
+  ion-card{
+    img{
+      max-height: 200px;
+    }
 
+    ion-card-content{
+      text-align: justify;
+    }
+
+    ion-card-title{
+      text-decoration: underline;
+    }
+  }
 }

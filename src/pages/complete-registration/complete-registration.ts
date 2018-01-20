@@ -45,12 +45,12 @@ export class CompleteRegistrationPage {
 
   buildForm(): void{
     this.form = this.formBuilder.group({
-      name: this.formBuilder.control('test1',Validators.required),
-      surname: this.formBuilder.control('test1',Validators.required),
-      address: this.formBuilder.control('test1',Validators.required),
-      city: this.formBuilder.control('test1',Validators.required),
-      phone: this.formBuilder.control('test1',Validators.required),
-      mobilePhone: this.formBuilder.control('test1',Validators.required),
+      name: this.formBuilder.control('',Validators.required),
+      surname: this.formBuilder.control('',Validators.required),
+      address: this.formBuilder.control('',Validators.required),
+      city: this.formBuilder.control('',Validators.required),
+      phone: this.formBuilder.control('',Validators.required),
+      mobilePhone: this.formBuilder.control('',Validators.required),
     })
   }
 

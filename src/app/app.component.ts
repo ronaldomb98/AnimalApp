@@ -69,6 +69,7 @@ export class MyApp {
   }
 
   public signOut() {
+    this.userDataSub.unsubscribe();
     this.nav.setRoot(HomePage).then(()=>{
       this.nav.popToRoot().then(()=>{
         setTimeout(() =>{

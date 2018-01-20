@@ -8,18 +8,27 @@
 </ion-header>
 
 <ion-content padding class="bg-style">
-  <ion-card *ngFor="let new of news">
-    <img [src]="new.img"/>
-    <ion-card-content>
-      <ion-card-title>
-        {{ new.title}}
-      </ion-card-title>
-      <p>
-        {{ new.description}}
-      </p>
-      <div text-right>
-        <button ion-button color="secondary" outline>ver mas</button>
-      </div>
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="news | async; let _news; else loading">
+    <ion-card *ngFor="let new of _news">
+      <img [src]="new.imgUrl"/>
+      <ion-card-content>
+        <ion-card-title>
+          {{ new.title}}
+        </ion-card-title>
+        <p c>
+          {{ new.description}}
+        </p>
+        <div text-right>
+          <button ion-button color="secondary" outline (click)="openNewInBrowser(new.newUrl)">ver mas</button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngIf="_news.length == 0">No hay noticias registradas</div>
+  </div>
+
+  <ng-template #loading text-center>
+    <ion-spinner name="bubbles"></ion-spinner>
+  </ng-template>
+
 </ion-content>

@@ -31,10 +31,8 @@ import {MyAccountPage} from "../pages/my-account/my-account";
 import { ApiProvider } from '../providers/api/api';
 import {HttpClientModule} from "@angular/common/http";
 import {HelpFindPage} from "../pages/help-find/help-find";
-
-
-
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { ResetPasswordPage } from "../pages/reset-password/reset-password";
 @NgModule({
   declarations: [
     MyApp,
@@ -47,7 +45,8 @@ import {HelpFindPage} from "../pages/help-find/help-find";
     ReportPage,
     MyReportsPage,
     MyAccountPage,
-    HelpFindPage
+    HelpFindPage,
+    ResetPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -73,6 +72,7 @@ import {HelpFindPage} from "../pages/help-find/help-find";
     MyReportsPage,
     MyAccountPage,
     HelpFindPage,
+    ResetPasswordPage,
     SignupComponent,
     LoginComponent
   ],
@@ -86,7 +86,8 @@ import {HelpFindPage} from "../pages/help-find/help-find";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ApiProvider
+    ApiProvider,
+    InAppBrowser
 
   ]
 })

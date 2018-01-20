@@ -94,7 +94,7 @@
               Campo obligatorio
             </p>
             <p *ngIf="email.errors.email">
-              El campo debe ser un correo. Ej: usuario@email.com
+              Debe ser un correo.
             </p>
           </ion-item>
 
@@ -110,15 +110,21 @@
 
           <div padding>
             <button (click)="login()" [disabled]="!form.valid" ion-button block>Iniciar Sesión!</button>
+            <button (click)="openResetPassPage()" clear ion-button block>Olvide Contraseña</button>
           </div>
         </form>
       </ion-card-content>
     </ion-card>
   </div>
-  <button *ngIf="!hasAccount" ion-button  block (click)="buildFormLogin(); hasAccount = !hasAccount">
+  <button ion-button color="light" *ngIf="!hasAccount" block (click)="buildFormLogin(); hasAccount = !hasAccount">
     Ya tengo una cuenta
-
   </button>
+
+  <ion-card *ngIf="errorMessage">
+    <ion-card-header>
+      {{ errorMessage }}
+    </ion-card-header>
+  </ion-card>
   <button ion-button color="light" block (click)="buildFormSignup(); hasAccount = !hasAccount" *ngIf="hasAccount">Registrarme Ahora</button>
 
   

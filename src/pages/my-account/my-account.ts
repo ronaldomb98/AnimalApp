@@ -75,8 +75,11 @@ export class MyAccountPage {
   }
 
   public onSubmit():void {
+    const loading = this.loadingProvider.createLoading();
+    loading.present();
     const userData: IUserData = this.form.value;
     this.dbProvider.updateUserData(userData).then(()=>{
+      loading.dismiss();
       const toast = this.loadingProvider.createUpdatedToast();
       toast.present();
     });

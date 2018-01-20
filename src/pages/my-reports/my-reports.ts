@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {ReportPage} from "../report/report";
 import {Observable} from "rxjs/Observable";
@@ -16,7 +16,7 @@ import {Subscription} from "rxjs/Subscription";
   selector: 'page-my-reports',
   templateUrl: 'my-reports.html',
 })
-export class MyReportsPage implements OnInit{
+export class MyReportsPage implements OnInit, OnDestroy{
   documents: Array<any>;
   sub: Subscription;
   constructor(
@@ -30,8 +30,12 @@ export class MyReportsPage implements OnInit{
     console.log('ionViewDidLoad MyReportsPage');
   }
 
-  onPageWillLeave() {
+  ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  onPageWillLeave() {
+
   }
 
   ngOnInit() {

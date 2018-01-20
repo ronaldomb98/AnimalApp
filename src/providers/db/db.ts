@@ -69,6 +69,7 @@ export class DbProvider {
 
   get documentList() { return this.db.list('documents') }
   get petList() { return this.db.list('pets') }
+  get newList() { return this.db.list('news') }
   get myDocumentList() {
     const _uid: string = this.authProvider.currentUserUid;
     return this.db
