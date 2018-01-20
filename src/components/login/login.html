@@ -1,38 +1,3 @@
 <!-- Generated template for the LoginComponent component -->
 
-<ion-card>
-  <ion-card-header text-center>
-    Inicio de sesión
-  </ion-card-header>
 
-  <ion-card-content>
-    <form [formGroup]="form">
-      <ion-item>
-        <ion-label floating>Correo Electronico</ion-label>
-        <ion-input formControlName="email" type="email"></ion-input>
-      </ion-item>
-      <ion-item class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
-        <p *ngIf="email.errors.required">
-          Campo obligatorio
-        </p>
-        <p *ngIf="email.errors.email">
-          El campo debe ser un correo. Ej: usuario@email.com
-        </p>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Contraseña</ion-label>
-        <ion-input formControlName="password1" minlength="6" type="password"></ion-input>
-      </ion-item>
-      <ion-item class="error" *ngIf="password1.invalid && (password1.dirty || password1.touched)">
-        <p *ngIf="password1.errors.required">
-          Campo obligatorio
-        </p>
-      </ion-item>
-
-      <div padding>
-        <button (click)="login()" [disabled]="!form.valid" ion-button block>Iniciar Sesión!</button>
-      </div>
-    </form>
-  </ion-card-content>
-</ion-card>

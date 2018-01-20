@@ -1,3 +1,23 @@
 page-pet {
+  .vaccines{
+    margin: 3em;
+    border: solid;
+    border-color: color($colors, primary);
+    border-radius: 50px;
+    border-top: none;
+    border-bottom: none;
+  }
 
+  img.preview{
+    border: solid;
+    width: 40%;
+  }
+
+  ul{
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    list-style-type: none;
+    text-align: left;
+  }
 }

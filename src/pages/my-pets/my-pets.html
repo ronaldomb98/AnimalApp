@@ -18,21 +18,21 @@
 
 
 <ion-content padding>
-  <div *ngIf="pets | async; let _pets; else loading">
-    <ion-list *ngFor="let pet of pets | async">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img [src]="pet.urlImg">
-        </ion-thumbnail>
-        <h2>{{ pet.name }}</h2>
-        <p>{{ pet.description }}</p>
-        <button ion-button clear item-end (click)="vewPet()">Ver</button>
-      </ion-item>
-    </ion-list>
-    <div *ngIf="_pets.length === 0">No has registrado tus mascotas.<a (click)="newPet()">Registralas ahora</a></div>
-  </div>
+  <ion-list *ngIf="pets; else loading">
+    <ion-item *ngFor="let pet of pets">
+      <ion-thumbnail item-start>
+        <img [src]="pet.data.urlImg">
+      </ion-thumbnail>
+      <h2>{{ pet.data.name }}</h2>
+      <p>{{ pet.data.description }}</p>
+      <button ion-button clear item-end (click)="vewPet(pet.key)">Ver</button>
+    </ion-item>
+    <div *ngIf="pets.length === 0">No has registrado tus mascotas.<a (click)="newPet()">Registralas ahora</a></div>
+  </ion-list>
 
   <ng-template #loading>Cargando información</ng-template>
+
+
 
 
 <ion-fab right bottom (click)="newPet()">

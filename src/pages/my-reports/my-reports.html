@@ -7,13 +7,35 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>MyReports</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Mis Reportes</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-list *ngIf="documents; else loading">
+    <ion-item *ngFor="let _document of documents">
+      <ion-avatar item-start>
+        <img [src]="_document.data.imgUrl">
+      </ion-avatar>
+      <h2>{{ _document.data.issue}}</h2>
+      <h3>
+        <a item-right="" small (click)="viewReport(_document.key)" >Ver detalles</a>
+        {{_document.data.createdOn | date:'shortTime' }}
+      </h3>
+      <p>{{ _document.data.description}}</p>
+    </ion-item>
+    <div *ngIf="documents.length == 0" text-center margin-top="">
+      <button ion-button round color="secondary" (click)="newReport()">Crea tu primer Reporte</button>
+    </div>
+  </ion-list>
+  <ng-template #loading>Loading&hellip;</ng-template>
+
   <ion-fab right bottom (click)="newReport()">
     <button ion-fab ><ion-icon name="add" ></ion-icon></button>
   </ion-fab>

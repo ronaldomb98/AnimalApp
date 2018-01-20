@@ -10,7 +10,8 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Reportes</ion-title>
+    <ion-title *ngIf="!isOnlyView">Crear Reporte</ion-title>
+    <ion-title *ngIf="isOnlyView">Ver Reporte</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -20,49 +21,72 @@
 
   <form [formGroup]="form">
     <ion-list>
+
+      <!-- Document type-->
+      <ion-item>
+        <ion-label>Tipo de Reporte</ion-label>
+        <ion-select [disabled]="isOnlyView" formControlName="documentType">
+          <ion-option *ngFor="let documentType of documentTypeList | async" [value]="documentType.name">{{documentType.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
       <!-- Label -->
       <ion-item>
         <ion-label floating>Asunto</ion-label>
-        <ion-input formControlName="issue" type="name"></ion-input>
+        <ion-input [disabled]="isOnlyView" formControlName="issue" type="name"></ion-input>
       </ion-item>
       <ion-item class="error" *ngIf="issue.invalid && (issue.dirty || issue.touched)">
         <p *ngIf="issue.errors.required">Campo obligatorio</p>
       </ion-item>
 
-
       <!-- Description-->
       <ion-item>
         <ion-label floating>Descripción del reporte</ion-label>
-        <ion-textarea formControlName="description" type="textarea" rows="3"></ion-textarea>
+        <ion-textarea [disabled]="isOnlyView" formControlName="description" type="textarea" rows="2"></ion-textarea>
       </ion-item>
       <ion-item class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
         <p *ngIf="description.errors.required">Campo obligatorio</p>
       </ion-item>
 
-      <!-- Document type-->
-      <ion-item>
-        <ion-label>Tipo de Reporte</ion-label>
-        <ion-select formControlName="documentType">
-          <ion-option *ngFor="let documentType of documentTypeList | async" [value]="documentType.name">{{documentType.name}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-
       <!-- Photo -->
-      <ion-item>
-        <button ion-button (click)="capture()" round icon-right item-right color="secondary">
+      <ion-item *ngIf="!isOnlyView" >
+        <button *ngIf="!isAnalizing" ion-button (click)="capture()" round icon-right item-right color="secondary">
           Captura una foto!
           <ion-icon name="camera"></ion-icon>
         </button>
       </ion-item>
     </ion-list>
 
-    <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>
+    <div text-center>
+      <img class="preview" [src]="captureDataUrl" *ngIf="captureDataUrl"/>
+      <img class="preview" [src]="oldImageUrl" *ngIf="oldImageUrl"/>
+    </div>
+
+    <!-- Image analisis -->
+    <div text-center *ngIf="isAnalizing">
+      <div>{{ isAnalizingMessage }}</div>
+      <ion-spinner  name="bubbles"></ion-spinner>
+    </div>
+
+    <!-- Text translated -->
+    <div margin-vertical text-center *ngIf="imageAnalisisTransalted">
+      <div>Tags</div>
+      <div>
+        <ul>
+          <li *ngFor="let item of imageAnalisisTransalted">
+            {{ item | titlecase }}
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <!--submit button-->
-    <div padding>
-      <button (click)="upload()" [disabled]="!form.valid || !captureDataUrl" ion-button block>Guardar Datos!</button>
+    <div padding *ngIf="!isAnalizing">
+      <button *ngIf="!isOnlyView" (click)="onSubmit()" [disabled]="!form.valid || !captureDataUrl" ion-button block>Guardar Datos!</button>
+      <button (click)="openHelpFindPage()" *ngIf="isLookingForHelp" color="light" ion-button block>Encontrar Mascota</button>
     </div>
   </form>
-  {{ form.value | json}}
+  <p text-center *ngIf="isOnlyView; else yourPosition">Lugar del reporte</p>
+  <ng-template #yourPosition text-center>Tu posición actual</ng-template>
+  <div id="map_canvas"></div>
 </ion-content>

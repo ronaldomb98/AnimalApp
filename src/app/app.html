@@ -1,18 +1,24 @@
 <ion-menu [content]="content">
   <ion-header >
-    <ion-toolbar>
+    <ion-toolbar color="primary">
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list>
+      <ion-item-divider color="light">General</ion-item-divider>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+      <ion-item-divider color="light">Cuenta</ion-item-divider>
+      <button menuClose ion-item *ngFor="let p of accountPages" (click)="openPage(p)">Mi Cuenta</button>
       <ion-item-divider color="light">Sesión</ion-item-divider>
       <button ion-item (click)="signOut()">Cerrar Sesión <ion-icon item-end name="log-out"></ion-icon></button>
     </ion-list>
+    <div class="box-image-logo">
+      <img class="animalalertlogo" src="assets/imgs/animalalert.jpeg" alt="wenas">
+    </div>
   </ion-content>
 
 </ion-menu>

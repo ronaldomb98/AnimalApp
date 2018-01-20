@@ -14,8 +14,6 @@ import {AngularFireModule} from "angularfire2";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {SignupComponent} from "../components/signup/signup";
-import {LoginComponent} from "../components/login/login";
 import {AuthPage} from "../pages/auth/auth";
 import {CompleteRegistrationPage} from "../pages/complete-registration/complete-registration";
 import { DbProvider } from '../providers/db/db';
@@ -24,6 +22,17 @@ import {PetPage} from "../pages/pet/pet";
 import {Camera} from "@ionic-native/camera";
 import {ReportPage} from "../pages/report/report";
 import { LoadingProvider } from '../providers/loading/loading';
+import {GoogleMaps} from "@ionic-native/google-maps";
+import {MyReportsPage} from "../pages/my-reports/my-reports";
+import {SignupComponent} from "../components/signup/signup";
+import {LoginComponent} from "../components/login/login";
+import {ComponentsModule} from "../components/components.module";
+import {MyAccountPage} from "../pages/my-account/my-account";
+import { ApiProvider } from '../providers/api/api';
+import {HttpClientModule} from "@angular/common/http";
+import {HelpFindPage} from "../pages/help-find/help-find";
+
+
 
 
 @NgModule({
@@ -36,8 +45,9 @@ import { LoadingProvider } from '../providers/loading/loading';
     MyPetsPage,
     PetPage,
     ReportPage,
-    SignupComponent,
-    LoginComponent
+    MyReportsPage,
+    MyAccountPage,
+    HelpFindPage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +56,9 @@ import { LoadingProvider } from '../providers/loading/loading';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ComponentsModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -57,17 +69,25 @@ import { LoadingProvider } from '../providers/loading/loading';
     CompleteRegistrationPage,
     MyPetsPage,
     PetPage,
-    ReportPage
+    ReportPage,
+    MyReportsPage,
+    MyAccountPage,
+    HelpFindPage,
+    SignupComponent,
+    LoginComponent
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     DbProvider,
     Camera,
     LoadingController,
-    LoadingProvider
+    LoadingProvider,
+    GoogleMaps,
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ApiProvider
+
   ]
 })
 export class AppModule {}

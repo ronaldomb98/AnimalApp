@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 /**
  * Generated class for the AuthPage page.
@@ -15,15 +15,67 @@ import {AuthProvider} from "../../providers/auth/auth";
 })
 export class AuthPage {
   public hasAccount: boolean = false;
+  form: FormGroup;
+
+  public testText: string = "item1, item2, item3, item4.";
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public authProvider: AuthProvider
+    private formBuilder: FormBuilder,
+    private authProvider: AuthProvider
   ) {
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AuthPage');
+  splitText() {
+    
+    
   }
+
+  ngOnInit(): void {
+    this.buildFormSignup()
+    this.splitText();
+  }
+
+  buildFormLogin(): void{
+    this.form = this.formBuilder.group({
+      email: this.formBuilder.control('test1@gmail.com',[
+        Validators.required, Validators.email
+      ]),
+      password1: this.formBuilder.control('ronaldo123123',[Validators.required]),
+
+    })
+  }
+
+  public login() {
+    this.authProvider.basicLogin(this.email.value, this.password1.value)
+      .then(res=>{
+        console.log(res)
+      });
+  }
+
+  get email() { return this.form.get('email') }
+  get password1(){ return this.form.get('password1') }
+
+  buildFormSignup(): void{
+    this.form = this.formBuilder.group({
+      email: this.formBuilder.control(null,[
+        Validators.required,
+        Validators.email
+      ]),
+      password1: this.formBuilder.control(null,[
+        Validators.required,
+        Validators.minLength(6)
+      ]),
+      password2: this.formBuilder.control(null,Validators.required)
+    })
+  }
+
+  public signup() {
+    this.authProvider.basicSignup(this.email.value, this.password1.value)
+      .then(res=>{
+        console.log(res)
+      });
+  }
+
+  get password2(){ return this.form.get('password2') }
 
 }

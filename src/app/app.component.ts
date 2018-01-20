@@ -1,10 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import {App, LoadingController, MenuController, Nav, NavController, Platform} from 'ionic-angular';
+import {App, LoadingController, MenuController, Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import {AuthProvider} from "../providers/auth/auth";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AuthPage} from "../pages/auth/auth";
@@ -12,8 +11,8 @@ import {CompleteRegistrationPage} from "../pages/complete-registration/complete-
 import {DbProvider} from "../providers/db/db";
 import {Subscription} from "rxjs/Subscription";
 import {MyPetsPage} from "../pages/my-pets/my-pets";
-import {ReportPage} from "../pages/report/report";
-import {PetPage} from "../pages/pet/pet";
+import {MyReportsPage} from "../pages/my-reports/my-reports";
+import {MyAccountPage} from "../pages/my-account/my-account";
 
 @Component({
   templateUrl: 'app.html'
@@ -24,6 +23,7 @@ export class MyApp {
   rootPage: any = AuthPage;
   userDataSub: Subscription = new Subscription();
   pages: Array<{title: string, component: any}>;
+  accountPages: Array<{title: string, component: any}>;
 
   constructor(
     public platform: Platform,
@@ -41,9 +41,14 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Inicio', component: HomePage },
-      { title: 'Reportes', component: ReportPage },
+      { title: 'Reportes', component: MyReportsPage },
       { title: 'Mis Mascotas', component: MyPetsPage}
     ];
+    // used for an example of ngFor and navigation
+    this.accountPages = [
+      { title: 'Mi Cuenta', component: MyAccountPage },
+    ];
+
 
   }
 
@@ -53,7 +58,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.checkLog();
+      this.checkLog(); // Must be active
     });
   }
 
@@ -66,7 +71,10 @@ export class MyApp {
   public signOut() {
     this.nav.setRoot(HomePage).then(()=>{
       this.nav.popToRoot().then(()=>{
-        this.authProvider.signOut();
+        setTimeout(() =>{
+          this.authProvider.signOut();
+        },100)
+
       });
 
     });
@@ -89,21 +97,25 @@ export class MyApp {
           loading.dismiss()
         })
       }else {
-        this.dbProvider.userDataRef = this.dbProvider.db.object('users-data/' +  this.authProvider.currentUserUid)
+        this.dbProvider.userDataRef = this.dbProvider.db.object('users-data/' +  this.authProvider.currentUserUid);
         this.userDataSub = this.dbProvider.userDataRef.valueChanges().subscribe(res=>{
 
-          console.log(this.dbProvider.userDataRef)
-          if (res){
-            this.nav.setRoot(ReportPage).then(()=>{ // HomePage
-              this.nav.popToRoot()
-              loading.dismiss()
-            })
-          } else {
-            this.nav.setRoot(CompleteRegistrationPage).then(()=>{
-              this.nav.popToRoot()
-              loading.dismiss()
-            })
+          console.log(this.dbProvider.userDataRef);
+          let isUpdating = this.authProvider.isUpdatingUserInfo;
+          if (!isUpdating) {
+            if (res){
+              this.nav.setRoot(HomePage).then(()=>{ // HomePage
+                this.nav.popToRoot()
+                loading.dismiss()
+              })
+            } else {
+              this.nav.setRoot(CompleteRegistrationPage).then(()=>{
+                this.nav.popToRoot()
+                loading.dismiss()
+              })
+            }
           }
+
         })
 
       }

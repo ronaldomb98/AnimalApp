@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {AngularFireDatabase} from "angularfire2/database";
 import {Observable} from "rxjs/Observable";
 import {PetPage} from "../pet/pet";
 import {AuthProvider} from "../../providers/auth/auth";
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import {DbProvider} from "../../providers/db/db";
+import {Subscription} from "rxjs/Subscription";
 
 /**
  * Generated class for the MyPetsPage page.
@@ -16,27 +19,42 @@ import {AuthProvider} from "../../providers/auth/auth";
   selector: 'page-my-pets',
   templateUrl: 'my-pets.html',
 })
-export class MyPetsPage {
+export class MyPetsPage implements OnInit{
 
-  public pets: Observable<any[]>;
-
+  public pets: Array<any>;
+  private sub: Subscription;
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
-    private angularFireDatabase: AngularFireDatabase,
-    private authProvider: AuthProvider
-  ) {
-    this.pets = angularFireDatabase
-      .list('pets', ref => ref.orderByChild('userId').equalTo(this.authProvider.currentUserUid))
-      .valueChanges()
+    private dbProvider: DbProvider
+  ) { }
+
+  ionViewDidEnter() {
 
   }
+
+  ionViewWillUnload() {
+    this.sub.unsubscribe();
+  }
+
+  ngOnInit() {
+    this.sub = this.dbProvider.myPetList.snapshotChanges()
+      .subscribe(res => {
+        this.pets = [];
+        res.forEach(_pet=>{
+          this.pets.push({data: _pet.payload.val(), key: _pet.payload.key})
+        })
+      })
+  }
+
+
+
+
 
   newPet(){
     this.navCtrl.push(PetPage)
   }
-  vewPet(){
-    alert("En Desarrollo")
+  vewPet(key){
+    this.navCtrl.push(PetPage,{key: key})
   }
 
 }

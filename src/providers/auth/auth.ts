@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import {Injectable, ViewChild} from '@angular/core';
 import {AngularFireAuth} from "angularfire2/auth";
 import * as firebase from 'firebase/app';
-import {MenuController, Nav, NavController} from "ionic-angular";
-import {AuthPage} from "../../pages/auth/auth";
+import {MenuController, Nav} from "ionic-angular";
+
 /*
   Generated class for the AuthProvider provider.
 
@@ -14,6 +13,7 @@ import {AuthPage} from "../../pages/auth/auth";
 export class AuthProvider {
   @ViewChild(Nav) nav: Nav;
   public isLoggedIn: boolean = false;
+  public isUpdatingUserInfo: boolean = false;
   public currentUserUid: string = '';
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -37,9 +37,4 @@ export class AuthProvider {
   public signOut() {
     return this.angularFireAuth.auth.signOut()
   }
-
-
-
-
-
 }

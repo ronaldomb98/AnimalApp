@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {LoadingController} from "ionic-angular";
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 /*
   Generated class for the LoadingProvider provider.
@@ -11,12 +11,23 @@ import {LoadingController} from "ionic-angular";
 @Injectable()
 export class LoadingProvider {
 
-  constructor(public loadingController: LoadingController) {
+  constructor(
+    public loadingController: LoadingController,
+    public toastCtrl: ToastController
+  ) {
     console.log('Hello LoadingProvider Provider');
   }
 
   createLoading(){
     return this.loadingController.create({content:'Cargando...', spinner: 'dots'})
+  }
+
+  createUpdatedToast(){
+    return this.toastCtrl.create({
+      message: 'Información actualizada.',
+      duration: 3000,
+      position: 'middle'
+    });
   }
 
 }

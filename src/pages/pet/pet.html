@@ -60,24 +60,76 @@
         <p *ngIf="characteristics.errors.required">Campo obligatorio</p>
       </ion-item>
 
+      <!-- Vaccunas -->
+      <div formArrayName="vaccines">
 
+        <div *ngFor="let vaccine of vaccines.controls; let i=index" [formGroupName]="i">
+
+          <!-- Name Vaccine -->
+          <ion-list class="vaccines">
+            <ion-item>
+              Vacuna {{ i+1 }}
+              <button ion-button item-right round color="danger" (click)="deleteVaccine(i)">Eliminar Vacuna</button>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Nombre</ion-label>
+              <ion-input formControlName="name"></ion-input>
+            </ion-item>
+
+            <!-- dateApplied -->
+            <ion-item>
+              <ion-label>Fecha</ion-label>
+              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dateApplied"></ion-datetime>
+            </ion-item>
+
+          </ion-list>
+        </div>
+      </div>
+      <button margin ion-button round item-left color="light" (click)="addVaccine()">Agregar Vacuna</button>
 
       <!-- Photo -->
-      <ion-item>
-        <button ion-button (click)="capture()" round icon-right item-right color="secondary">
+      <ion-item *ngIf="!isAnalizing">
+        <button *ngIf="!key" ion-button (click)="capture()" round icon-right item-right color="secondary">
           Tomale una foto!
           <ion-icon name="camera"></ion-icon>
         </button>
       </ion-item>
     </ion-list>
 
-    <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>
+
+    <div text-center="">
+      <img class="preview" [src]="captureDataUrl" *ngIf="captureDataUrl"/>
+      <img class="preview" [src]="oldImage" *ngIf="oldImage"/>
+    </div>
+
+    <!-- Image analisis -->
+    <div text-center *ngIf="isAnalizing">
+      <div>{{ isAnalizingMessage }}</div>
+      <ion-spinner  name="bubbles"></ion-spinner>
+    </div>
+    
+    <!-- Text translated -->
+    <div text-center *ngIf="imageAnalisisTransalted">
+      <div>Tags</div>
+      <div>
+        <ul>
+          <li *ngFor="let item of imageAnalisisTransalted">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <!--submit button-->
-    <div padding>
-      <button (click)="upload()" [disabled]="!form.valid || !captureDataUrl" ion-button block>Guardar Datos!</button>
+    <div padding *ngIf="!isAnalizing">
+      <button *ngIf="!key" (click)="upload()" [disabled]="!form.valid || !captureDataUrl" ion-button block>Guardar Datos!</button>
+      <button *ngIf="key" (click)="updatePetDate()" [disabled]="!form.valid" ion-button block>Actualizar Datos!</button>
     </div>
   </form>
+  <pre>
+    {{ textDebug | json }}
+  </pre>
 </ion-content>
 
 
